@@ -6,6 +6,7 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 import GooglePay from "./GooglePay";
+import ApplePayButton from "./ApplePay";
 import { url, postApis } from "../data/getApis";
 import PropTypes from "prop-types";
 
@@ -15,7 +16,7 @@ function PaymentForm({cost}) {
   const elements = useElements();
   const [clientSecret, setClientSecret] = useState("");
   const [processing, setProcessing] = useState(false);
-
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!stripe || !elements) {
@@ -103,6 +104,7 @@ function PaymentForm({cost}) {
           </button>
         </div>
         <GooglePay />
+        <ApplePayButton payment={cost} />
       </form>
     </div>
   );
