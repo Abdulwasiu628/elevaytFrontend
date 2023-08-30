@@ -41,7 +41,7 @@ const ApplePayButton = ({payment}) => {
   return (
     <div>
       {
-        paymentRequest && <PaymentRequestButtonElement options={{paymentRequest}}/>
+        paymentRequest && <PaymentRequestButtonElement options={{paymentRequest}} />
       }
       
     </div>
