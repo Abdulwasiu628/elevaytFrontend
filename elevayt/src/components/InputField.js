@@ -1,6 +1,6 @@
 import React from "react";
 import {useSelector, useDispatch} from "react-redux";
-import { setName, setEmail, clearForm } from "../redux/slicers/formSlicer";
+import { setName, setEmail, clearForm } from "@slicers/formSlicer";
 
 const InputField = () => {
   const {name, email} = useSelector((state) => state.userForm);

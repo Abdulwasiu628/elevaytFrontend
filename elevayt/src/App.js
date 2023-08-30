@@ -1,26 +1,32 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
+import ChatRoom from "./components/ChatRoom";
+//import Stripe from "./components/Stripe";
+import ProductForm from "./components/CardGateway";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
+const stripePromise = loadStripe("pk_test_9SI24YHAZLk81yaQORdZItFZ00zEySjiTY");
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Routes>
+          <Route path="/chat" element={<ChatRoom />} />
+          <Route path="/stripe" element={<StripeWrapper />} />
+        </Routes>
+      </Router>
     </div>
+  );
+}
+
+function StripeWrapper() {
+  return (
+    <Elements stripe={stripePromise}>
+      <ProductForm />
+    </Elements>
   );
 }
 
