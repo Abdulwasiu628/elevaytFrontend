@@ -8,7 +8,7 @@ import {
 import GooglePay from "./GooglePay";
 import { url, postApis } from "../data/getApis";
 import PropTypes from "prop-types";
-import ProductForm from "./CardGateway";
+
 
 function PaymentForm({cost}) {
   const stripe = useStripe();
@@ -21,12 +21,14 @@ function PaymentForm({cost}) {
     if (!stripe || !elements) {
       return;
     }
-    postApis("http://localhost:5000/pay/create-payment-intent", cost).then(result => {
-      setClientSecret(result.clientSecret);
-    }).catch(err => {
-      return err;
-    });
-    
+    postApis("https://elevayt.onrender.com/pay/create-payment-intent", cost)
+      .then((result) => {
+        setClientSecret(result.clientSecret);
+      })
+      .catch((err) => {
+        return err;
+      });
+    console.log(clientSecret);
     setProcessing(true);
     console.log(clientSecret);
     console.log(elements.getElement(CardElement));
