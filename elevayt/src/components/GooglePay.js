@@ -12,13 +12,15 @@ const GooglePay = () => {
             type: "CARD",
             parameters: {
               allowedAuthMethods: ["PAN_ONLY", "CRYPTOGRAM_3DS"],
-              allowedCardNetworks: ["MASTERCARD", "VISA"],
+              allowedCardNetworks: ["AMEX", "DISCOVER", "MASTERCARD", "VISA"],
             },
             tokenizationSpecification: {
               type: "PAYMENT_GATEWAY",
               parameters: {
-                gateway: "example",
-                gatewayMerchantId: "exampleGatewayMerchantId",
+                gateway: "stripe",
+                stripe: {
+                  publishableKey: "YOUR_STRIPE_PUBLIC_KEY",
+                },
               },
             },
           },
@@ -34,10 +36,19 @@ const GooglePay = () => {
           currencyCode: "USD",
           countryCode: "US",
         },
+        shippingAddressRequired: false,
+        callbackIntents: ["PAYMENT_AUTHORIZATION"],
       }}
       onLoadPaymentData={(paymentRequest) => {
         console.log("load payment data", paymentRequest);
       }}
+      onPaymentAuthorized={(paymentData) => {
+        console.log("load payment data", paymentData);
+        return { transactionState: "SUCCESS" };
+      }}
+      existingPaymentMethodRequired="false"
+      buttonColor="black"
+      buttonType="suscribe"
     />
   );
 };
