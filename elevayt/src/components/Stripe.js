@@ -22,7 +22,7 @@ function PaymentForm({cost}) {
     if (!stripe || !elements) {
       return;
     }
-    postApis("https://elevayt.onrender.com/pay/create-payment-intent", cost)
+    postApis("https://elevayt.onrender.com/stripe/create-payment-intent", cost)
       .then((result) => {
         setClientSecret(result.clientSecret);
       })

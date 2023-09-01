@@ -34,7 +34,7 @@ const ApplePayButton = ({payment}) => {
       }
     });
     pr.on("paymentmethod", async(e) => {
-      postApis("https://elevayt.onrender.com/pay/create-payment-intent", payment)
+      postApis("https://elevayt.onrender.com/stripe/create-payment-intent", payment)
         .then((result) => {
           setClientSecret(result.clientSecret);
         })
