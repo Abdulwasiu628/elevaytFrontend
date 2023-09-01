@@ -33,6 +33,7 @@ const ApplePayButton = ({payment}) => {
         console.log("Error:", err);
       }
     });
+    console.log(payment);
     pr.on("paymentmethod", async(e) => {
       postApis("https://elevayt.onrender.com/stripe/create-payment-intent", payment)
         .then((result) => {
@@ -41,6 +42,7 @@ const ApplePayButton = ({payment}) => {
         .catch((err) => {
           return err;
         });
+      console.log(clientSecret);
       const {error, paymentIntent} = await stripe.confirmCardPayment(clientSecret, {
         payment_method: e.paymentMethod.id
       },

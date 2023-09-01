@@ -31,7 +31,7 @@ function PaymentForm({cost}) {
       });
     console.log(clientSecret);
     setProcessing(true);
-    console.log(clientSecret);
+    
     console.log(elements.getElement(CardElement));
     try {
       const result = await stripe.confirmCardPayment(clientSecret, {
