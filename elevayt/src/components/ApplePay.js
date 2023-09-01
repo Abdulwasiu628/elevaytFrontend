@@ -10,8 +10,6 @@ const ApplePayButton = ({payment}) => {
   const [clientSecret, setClientSecret] = useState("");
   console.log("payment ", payment.currency.toLowerCase());
   useEffect(() => {
-    // Include the Apple Pay button using the Apple Pay JS API
-    
     if(!stripe || !elements){
       return;
     }
