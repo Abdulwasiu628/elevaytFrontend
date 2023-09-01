@@ -3,6 +3,7 @@ import {BasicModal} from "./Materials";
 import PaymentForm from "./Stripe";
 import PaymentCard from "./PaymentCard";
 import { paymentChoice } from "../data/payment";
+import ChatBot from "./ChatBot";
 const ProductForm = () => {
   const initialValues = {
     currency: "",
@@ -39,6 +40,7 @@ const ProductForm = () => {
         open={open}
         value={<PaymentForm cost={market} />}
       />
+      <ChatBot />
     </div>
   );
 };

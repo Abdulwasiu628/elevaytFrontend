@@ -1,0 +1,16 @@
+.user{
+  background-color: aquamarine;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  max-width: 80%;
+  position: relative;
+}
+.chatbot{
+  position: relative;
+  background-color: bisque;
+  text-align: left;
+  padding: 10px;
+  left: 10%;
+  width: 80%;
+}
