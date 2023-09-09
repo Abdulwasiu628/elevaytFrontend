@@ -74,6 +74,9 @@ const ApplePayButton = ({ payment }) => {
   if(paymentRequest){
     return <PaymentRequestButtonElement options={{paymentRequest}} />;
   }
+  return (
+    <button>Apple pay</button>
+  );
 
 };
 

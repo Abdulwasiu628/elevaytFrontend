@@ -80,7 +80,7 @@ function PaymentForm({cost}) {
   
   return (
     <div style={divStyle}>
-      <form onSubmit={handleSubmit} style={style}>
+      {/* <form onSubmit={handleSubmit} style={style}>
         <div style={cardStyle}>
           <center>
             <label htmlFor="card-info">Payment Info</label>
@@ -105,9 +105,9 @@ function PaymentForm({cost}) {
             {processing ? "Processing..." : "Pay"}
           </button>
         </div>
-        <GooglePay />
-        <ApplePayButton payment={cost} />
-      </form>
+      </form> */}
+      <GooglePay />
+      <ApplePayButton payment={cost} />
     </div>
   );
 }
