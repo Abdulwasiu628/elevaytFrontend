@@ -37,7 +37,7 @@ export const BasicModal = ({openModal, open, value}) => {
 BasicModal.propTypes = {
   openModal: PropTypes.func,
   open: PropTypes.bool,
-  value: PropTypes.elementType
+  value: PropTypes.object
 };
 
 

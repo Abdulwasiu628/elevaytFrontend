@@ -1,79 +1,84 @@
-import React, {useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useStripe, useElements, PaymentRequestButtonElement } from "@stripe/react-stripe-js";
 import PropTypes from "prop-types";
 import { postApis } from "../data/getApis";
-const ApplePayButton = ({payment}) => {
-  
+
+const ApplePayButton = ({ payment }) => {
   const stripe = useStripe();
   const elements = useElements();
-  const [paymentRequest, setPaymentRequest] = useState("");
   const [clientSecret, setClientSecret] = useState("");
-  console.log("payment ", payment.currency.toLowerCase());
+  const [paymentRequest, setPaymentRequest] = useState("");
+
   useEffect(() => {
-    if(!stripe || !elements){
+    if (!stripe || !elements) {
       return;
     }
-    const paymentRequest = {
+    const pr = stripe.paymentRequest({
       currency: "usd",
       country: "US",
       requestPayerEmail: true,
       requestPayerName: true,
       total: {
         label: "Total Amount",
-        amount: Number(payment.amount) || 0.00,
+        amount: Number(payment.amount) || 0.0,
       },
-    };
-    const pr = stripe.paymentRequest(paymentRequest);
-    pr.canMakePayment().then((result) => {
-      if(result){
-        setPaymentRequest(pr);
-      }
-    }).catch((err) => {
-      if(err){
-        console.log("Error:", err);
-      }
     });
-    console.log(payment);
-    pr.on("paymentmethod", async(e) => {
-      postApis("https://elevayt.onrender.com/stripe/create-payment-intent", payment)
+    pr.canMakePayment()
+      .then((result) => {
+        if (result) {
+          setPaymentRequest(pr);
+        }
+      })
+      .catch((err) => {
+        if (err) {
+          console.log("Error:", err);
+        }
+      });
+
+    pr.on("paymentmethod", async (e) => {
+      postApis(
+        "https://elevayt.onrender.com/stripe/create-payment-intent",
+        payment
+      )
         .then((result) => {
-          setClientSecret(result.clientSecret);
+          const { clientSecret } = result; // Get the clientSecret from the result
+          console.log(clientSecret);
+          setClientSecret(clientSecret);
+          return stripe.confirmCardPayment(
+            clientSecret,
+            {
+              payment_method: e.paymentMethod.id,
+            },
+            {
+              handleActions: false,
+            }
+          );
+        })
+        .then(({ error, paymentIntent }) => {
+          if (error) {
+            e.complete("fail");
+            console.log("fail");
+          } else {
+            e.complete("success");
+            if (paymentIntent.status === "requires_action") {
+              stripe.confirmCardPayment(clientSecret);
+            }
+          }
         })
         .catch((err) => {
-          return err;
+          console.log(err);
         });
-      console.log(clientSecret);
-      const {error, paymentIntent} = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: e.paymentMethod.id
-      },
-      {
-        handleActions: false
-      }
-      );
-      if(error){
-        e.complete("fail");
-      }
-      e.complete("success");
-      if(paymentIntent.status == "requires_action"){
-        stripe.confirmCardPayment(clientSecret);
-      }
     });
-  }, [stripe, elements]);
     
-  
-  
+  }, [stripe, elements, payment]);
+  if(paymentRequest){
+    return <PaymentRequestButtonElement options={{paymentRequest}} />;
+  }
 
-  return (
-    <div>
-      {
-        paymentRequest && <PaymentRequestButtonElement options={{paymentRequest}} />
-      }
-      
-    </div>
-  );
 };
 
 ApplePayButton.propTypes = {
-  payment: PropTypes.object
+  payment: PropTypes.object,
 };
+
 export default ApplePayButton;

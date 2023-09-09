@@ -83,8 +83,8 @@ const PaymentCard = ({mode, packages, monthlyAmount, yearlyAmount, currency, ope
 PaymentCard.propTypes = {
   mode: PropTypes.string.isRequired,
   packages: PropTypes.array,
-  monthlyAmount: PropTypes.string.isRequired,
-  yearlyAmount: PropTypes.string,
+  monthlyAmount: PropTypes.number,
+  yearlyAmount: PropTypes.number,
   currency: PropTypes.string,
   openModal: PropTypes.func,
   setMarket: PropTypes.func

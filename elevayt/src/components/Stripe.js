@@ -9,7 +9,9 @@ import GooglePay from "./GooglePay";
 import ApplePayButton from "./ApplePay";
 import { url, postApis } from "../data/getApis";
 import PropTypes from "prop-types";
-
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+const stripePromise = loadStripe("pk_test_9SI24YHAZLk81yaQORdZItFZ00zEySjiTY");
 
 function PaymentForm({cost}) {
   const stripe = useStripe();
@@ -31,7 +33,7 @@ function PaymentForm({cost}) {
       });
     console.log(clientSecret);
     setProcessing(true);
-    
+    console.log(clientSecret);
     console.log(elements.getElement(CardElement));
     try {
       const result = await stripe.confirmCardPayment(clientSecret, {
