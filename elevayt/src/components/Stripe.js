@@ -5,8 +5,7 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import GooglePay from "./GooglePay";
-import ApplePayButton from "./ApplePay";
+
 import { url, postApis } from "../data/getApis";
 import PropTypes from "prop-types";
 import { Elements } from "@stripe/react-stripe-js";
@@ -80,7 +79,7 @@ function PaymentForm({cost}) {
   
   return (
     <div style={divStyle}>
-      {/* <form onSubmit={handleSubmit} style={style}>
+      <form onSubmit={handleSubmit} style={style}>
         <div style={cardStyle}>
           <center>
             <label htmlFor="card-info">Payment Info</label>
@@ -105,9 +104,8 @@ function PaymentForm({cost}) {
             {processing ? "Processing..." : "Pay"}
           </button>
         </div>
-      </form> */}
-      <GooglePay />
-      <ApplePayButton payment={cost} />
+      </form>
+      
     </div>
   );
 }
